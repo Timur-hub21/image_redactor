@@ -23,3 +23,11 @@ class AuthStateAuthenticated extends AuthState {
   @override
   List<Object> get props => [status];
 }
+
+class AuthStateUnauthenticated extends AuthState {
+  final AuthStatus status;
+  AuthStateUnauthenticated({this.status = AuthStatus.unauthenticated});
+
+  @override
+  List<Object> get props => [status];
+}

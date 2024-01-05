@@ -13,7 +13,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       : _authRepositoryImplementation = authRepositoryImplementation,
         super(AuthStateInitial()) {
     on<GetBiometricsTypeEvent>(_getBiometrics);
-
     on<AuthStatusChangedByLocalAuthEvent>(_localAuth);
   }
 
@@ -30,9 +29,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     final bool authenticated = await _authRepositoryImplementation.localAuth();
 
-    if (authenticated == true) {
-      Future.delayed(const Duration(seconds: 1));
+    if (authenticated) {
       emit(AuthStateAuthenticated(status: AuthStatus.authenticated));
+    } else {
+      emit(AuthStateUnauthenticated(status: AuthStatus.unauthenticated));
     }
   }
 }

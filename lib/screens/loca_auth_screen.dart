@@ -8,14 +8,14 @@ import 'package:image_redactor/screens/images_screen.dart';
 import 'package:image_redactor/services/local_auth_service.dart';
 import 'package:local_auth/local_auth.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class LocalAuthScreen extends StatefulWidget {
+  const LocalAuthScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<LocalAuthScreen> createState() => _LocalAuthScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _LocalAuthScreenState extends State<LocalAuthScreen> {
   late final AuthRepositoryImplementation _authRepositoryImplementation;
   late final LocalAuthentication _localAuthentication;
   late final LocalAuthService _localAuthService;
@@ -39,6 +39,13 @@ class _MainScreenState extends State<MainScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthStateAuthenticated) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ImagesScreen(),
+              ),
+            );
+          } else if (state is AuthStateUnauthenticated) {
             SnackBar snackBar = SnackBar(
               content: Text(
                 "Status: $state",
@@ -48,12 +55,6 @@ class _MainScreenState extends State<MainScreen> {
               backgroundColor: Colors.black,
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ImagesScreen(),
-              ),
-            );
           }
         },
         builder: (context, state) {

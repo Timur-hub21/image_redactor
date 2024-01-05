@@ -4,7 +4,7 @@ import 'package:local_auth/local_auth.dart';
 
 class LocalAuthService {
   final LocalAuthentication localAuthentication;
-  LocalAuthService(this.localAuthentication);
+  const LocalAuthService(this.localAuthentication);
 
   /// Get list of available biometrics
   Future<void> getBiometrics() async {
