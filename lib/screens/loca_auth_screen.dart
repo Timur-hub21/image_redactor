@@ -4,7 +4,7 @@ import 'package:image_redactor/bloc/auth_bloc/auth_bloc.dart';
 import 'package:image_redactor/bloc/auth_bloc/auth_event.dart';
 import 'package:image_redactor/bloc/auth_bloc/auth_state.dart';
 import 'package:image_redactor/implementations/auth_repository_impl.dart';
-import 'package:image_redactor/screens/images_screen.dart';
+import 'package:image_redactor/screens/image_redactor_screen.dart';
 import 'package:image_redactor/services/local_auth_service.dart';
 import 'package:local_auth/local_auth.dart';
 
@@ -16,9 +16,9 @@ class LocalAuthScreen extends StatefulWidget {
 }
 
 class _LocalAuthScreenState extends State<LocalAuthScreen> {
-  late final AuthRepositoryImplementation _authRepositoryImplementation;
-  late final LocalAuthentication _localAuthentication;
-  late final LocalAuthService _localAuthService;
+  static late final AuthRepositoryImplementation _authRepositoryImplementation;
+  static late final LocalAuthentication _localAuthentication;
+  static late final LocalAuthService _localAuthService;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _LocalAuthScreenState extends State<LocalAuthScreen> {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const ImagesScreen(),
+                builder: (context) => const ImageRedactorScreen(),
               ),
             );
           } else if (state is AuthStateUnauthenticated) {

@@ -4,7 +4,7 @@ import 'package:image_redactor/bloc/auth_bloc/auth_bloc.dart';
 import 'package:image_redactor/bloc/image_redactor_bloc/image_redactor_bloc.dart';
 import 'package:image_redactor/implementations/auth_repository_impl.dart';
 import 'package:image_redactor/implementations/image_redactor_impl.dart';
-import 'package:image_redactor/screens/images_screen.dart';
+import 'package:image_redactor/screens/image_redactor_screen.dart';
 import 'package:image_redactor/screens/loca_auth_screen.dart';
 import 'package:image_redactor/services/image_picker_service.dart';
 import 'package:image_redactor/services/local_auth_service.dart';
@@ -18,11 +18,11 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  late final AuthRepositoryImplementation _authRepositoryImplementation;
-  late final LocalAuthentication _localAuthentication;
-  late final LocalAuthService _localAuthService;
-  late final ImagePickerService _imagePickerService;
-  late final ImageRedactorImplementation _imageRedactorImplementation;
+  static late final AuthRepositoryImplementation _authRepositoryImplementation;
+  static late final LocalAuthentication _localAuthentication;
+  static late final LocalAuthService _localAuthService;
+  static late final ImagePickerService _imagePickerService;
+  static late final ImageRedactorImplementation _imageRedactorImplementation;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _ApplicationState extends State<Application> {
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Image Redactor',
-        home: ImagesScreen(),
+        home: ImageRedactorScreen(),
       ),
     );
   }

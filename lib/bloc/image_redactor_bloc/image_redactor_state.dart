@@ -16,6 +16,13 @@ class ImageRedactorInitialState extends ImageRedactorState {
   List<XFile?> get props => [image];
 }
 
+class ImageRedactorLoadingState extends ImageRedactorState {
+  const ImageRedactorLoadingState({required super.image});
+
+  @override
+  List<XFile?> get props => [image];
+}
+
 class ImagePickedState extends ImageRedactorState {
   const ImagePickedState({required super.image});
 

@@ -5,8 +5,8 @@ import 'package:image_redactor/bloc/image_redactor_bloc/image_redactor_bloc.dart
 import 'package:image_redactor/bloc/image_redactor_bloc/image_redactor_event.dart';
 import 'package:image_redactor/bloc/image_redactor_bloc/image_redactor_state.dart';
 
-class ImagesScreen extends StatelessWidget {
-  const ImagesScreen({super.key});
+class ImageRedactorScreen extends StatelessWidget {
+  const ImageRedactorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +18,21 @@ class ImagesScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(),
-          body: SafeArea(
-            child: Center(
-              child: state.image != null
-                  ? Image.file(File(state.image!.path))
-                  : const Text('Image must be here'),
-            ),
+          body: const SafeArea(
+            child: ImageRedactorBody(),
           ),
           floatingActionButton: FloatingActionButton(
+            child: const Center(
+              child: Icon(
+                Icons.add,
+                size: 30,
+              ),
+            ),
             onPressed: () => showModalBottomSheet(
               context: context,
               builder: (BuildContext context) => RepaintBoundary(
                 child: Container(
-                  height: MediaQuery.sizeOf(context).height / 4.25,
+                  height: MediaQuery.sizeOf(context).height / 6,
                   color: Colors.blueGrey,
                   child: Wrap(
                     children: [
@@ -67,6 +69,25 @@ class ImagesScreen extends StatelessWidget {
             ),
           ),
         );
+      },
+    );
+  }
+}
+
+class ImageRedactorBody extends StatelessWidget {
+  const ImageRedactorBody({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ImageRedactorBloc, ImageRedactorState>(
+      builder: (context, state) {
+        if (state is ImageRedactorLoadingState) {
+          return const Center(child: Text('Loading...'));
+        } else if (state is ImagePickedState) {
+          return Center(child: Image.file(File(state.image!.path)));
+        } else {
+          return const Center(child: Text('Image must be here'));
+        }
       },
     );
   }
