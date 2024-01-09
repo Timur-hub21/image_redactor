@@ -65,7 +65,7 @@ class ImageRedactorBloc extends Bloc<ImageRedactorEvent, ImageRedactorState> {
 
   Future<void> _cropImage(CropImageEvent cropImageEvent,
       Emitter<ImageRedactorState> emitter) async {
-    final XFile pickedImage = state.image!;
+    final XFile pickedImage = cropImageEvent.image!;
 
     final File? image = await _imageRedactorImplementation.cropImage(
         imagePath: pickedImage.path);
@@ -74,7 +74,7 @@ class ImageRedactorBloc extends Bloc<ImageRedactorEvent, ImageRedactorState> {
       emit(const ImageRedactorInitialState(
           isModificationMode: false, image: null));
     } else {
-      final XFile croppedImage = XFile(image.path);
+      XFile? croppedImage = XFile(image.path);
 
       emit(ImageRedactorPickedState(
           isModificationMode: true, image: croppedImage));

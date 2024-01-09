@@ -61,7 +61,7 @@ class ImageRedactorBody extends StatelessWidget {
                           CropImageEvent(state.image),
                         ),
                       ),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 5),
                       const Text('Press to crop selected Image')
                     ],
                   ),
@@ -69,7 +69,7 @@ class ImageRedactorBody extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ActionButton(
                       icon: const Icon(Icons.remove, size: 26),
@@ -77,7 +77,9 @@ class ImageRedactorBody extends StatelessWidget {
                         OnImageBrightnessDecrementEvent(state.brightness),
                       ),
                     ),
+                    const SizedBox(width: 5),
                     const Text('Change brightness of selected Image'),
+                    const Spacer(),
                     ActionButton(
                       icon: const Icon(Icons.add, size: 26),
                       onTap: () => imageRedactorBloc.add(
@@ -89,7 +91,7 @@ class ImageRedactorBody extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ActionButton(
                       icon: const Icon(Icons.remove, size: 26),
@@ -97,7 +99,9 @@ class ImageRedactorBody extends StatelessWidget {
                         OnImageHueDecrementEvent(state.hue),
                       ),
                     ),
+                    const SizedBox(width: 5),
                     const Text('Change hue of selected Image'),
+                    const Spacer(),
                     ActionButton(
                       icon: const Icon(Icons.add, size: 26),
                       onTap: () => imageRedactorBloc.add(
@@ -117,7 +121,9 @@ class ImageRedactorBody extends StatelessWidget {
                         OnImageSaturationDecrementEvent(state.saturation),
                       ),
                     ),
+                    const SizedBox(width: 5),
                     const Text('Change saturation of selected Image'),
+                    const Spacer(),
                     ActionButton(
                       icon: const Icon(Icons.add, size: 26),
                       onTap: () => imageRedactorBloc.add(
