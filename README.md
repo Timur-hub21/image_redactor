@@ -1,16 +1,18 @@
 # image_redactor
 
-A new Flutter project.
+Timur Niyazov test task - Image redactor flutter app.
 
-## Getting Started
+Из того что можно было еще реализовать/улучшить:
+Инициализацию репозиториев - написать свой di container
+Отдельный BLoC для хранения и работы с файлом
+Добавить сохранение изображения в список с возможностью изменить снова.
 
-This project is a starting point for a Flutter application.
+Project Info:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- BLoC - state management.
+- Components - custom components.
+- Implementations - Implementation methods of interface classes.
+- Repositories - Abstract inferfaces for observation of single responsobility principe.
+- Screens - User interfaces.
+- Services - Services for implementation functionality methods.
+- Utils - Utilities for methods implementations, statuses, common methods.

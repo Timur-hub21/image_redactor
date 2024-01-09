@@ -1,92 +1,68 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:image/image.dart' as img;
+import 'package:image_cropper/image_cropper.dart';
 
 class ImagePickerService {
   final ImagePicker imagePicker = ImagePicker();
+  final ImageCropper imageCropper = ImageCropper();
 
   ImagePickerService();
 
   Future<XFile?> selectImageFromGallery() async {
-    XFile? image = await imagePicker.pickImage(source: ImageSource.gallery);
-    if (image == null || image.path.isEmpty) return null;
-    return image;
+    try {
+      final XFile? image =
+          await imagePicker.pickImage(source: ImageSource.gallery);
+
+      if (image == null || image.path.isEmpty) {
+        return null;
+      }
+
+      return image;
+    } catch (e) {
+      throw Exception("Exception is: $e");
+    }
   }
 
   Future<XFile?> selectImageFromCamera() async {
-    XFile? image = await imagePicker.pickImage(source: ImageSource.camera);
-    if (image == null || image.path.isEmpty) return null;
-    return image;
+    try {
+      final XFile? image =
+          await imagePicker.pickImage(source: ImageSource.camera);
+      return image;
+    } catch (e) {
+      throw Exception("Exception is: $e");
+    }
   }
 
-  Future<Uint8List?> convertXFileToUint8List(XFile xFile) async {
+  Future<File?> cropImage(String imagePath) async {
     try {
-      File file = File(xFile.path);
-      if (await file.exists()) {
-        List<int> bytes = await file.readAsBytes();
-        return Uint8List.fromList(bytes);
+      File? convertedFile;
+
+      CroppedFile? croppedFile = await imageCropper.cropImage(
+        sourcePath: imagePath,
+        aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+        maxWidth: 512,
+        maxHeight: 512,
+      );
+      if (croppedFile == null || croppedFile.path.isEmpty) {
+        return null;
+      } else {
+        convertedFile = await copyCroppedFile(croppedFile.path);
       }
+      return convertedFile;
     } catch (e) {
-      debugPrint('Произошла ошибка при конвертации XFile в Uint8List: $e');
-    }
-    return null;
-  }
-
-  // Future<XFile?> convertUint8ListToXFile(
-  //   Uint8List uint8List,
-  //   String fileName,
-  // ) async {
-  //   try {
-  //     /// Получаем директорию приложения для сохранения файла
-  //     final Directory appDirectory = await getApplicationDocumentsDirectory();
-  //     final String filePath = '${appDirectory.path}/$fileName';
-
-  //     /// Создаем и записываем данные в файл
-  //     await File(filePath).writeAsBytes(uint8List);
-
-  //     /// Создаем XFile на основе файла
-  //     final XFile xFile = XFile(filePath);
-  //     return xFile;
-  //   } catch (e) {
-  //     debugPrint('Произошла ошибка при конвертации Uint8List в XFile: $e');
-  //     return null;
-  //   }
-  // }
-
-  Future<XFile?> convertUint8ListToXFile(
-    Uint8List uint8List,
-    String fileName,
-  ) async {
-    try {
-      final Directory appDirectory = await getApplicationDocumentsDirectory();
-      final String filePath = '${appDirectory.path}/$fileName';
-
-      await File(filePath).writeAsBytes(uint8List);
-
-      return XFile(filePath);
-    } catch (e) {
-      debugPrint('Произошла ошибка при конвертации Uint8List в XFile: $e');
-      return null;
+      throw Exception('Не удалось обрезать изображение: $e');
     }
   }
 
-  Future<Uint8List> flipVertical(
-    Uint8List imageData, {
-    int width = 180,
-    int height = 180,
-  }) async {
-    img.Image image = img.decodeImage(imageData)!;
+  Future<File> copyCroppedFile(String croppedFilePath) async {
+    final Directory appDocDir = await getTemporaryDirectory();
+    final String appDocPath = appDocDir.path;
+    final String newFilePath = '$appDocPath/cropped_image.jpg';
 
-    // Выполнение вертикального флипа
-    img.Image flippedImage = img.flipVertical(image);
+    final File croppedFile = File(croppedFilePath);
+    final File newFile = await croppedFile.copy(newFilePath);
 
-    // Преобразование изображения в байты
-    Uint8List flippedImageData =
-        Uint8List.fromList(img.encodePng(flippedImage));
-
-    return flippedImageData;
+    return newFile;
   }
 }

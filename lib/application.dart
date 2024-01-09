@@ -5,7 +5,7 @@ import 'package:image_redactor/bloc/image_redactor_bloc/image_redactor_bloc.dart
 import 'package:image_redactor/implementations/auth_repository_impl.dart';
 import 'package:image_redactor/implementations/image_redactor_impl.dart';
 import 'package:image_redactor/screens/image_redactor_screen.dart';
-import 'package:image_redactor/screens/loca_auth_screen.dart';
+// import 'package:image_redactor/screens/loca_auth_screen.dart';
 import 'package:image_redactor/services/image_picker_service.dart';
 import 'package:image_redactor/services/local_auth_service.dart';
 import 'package:local_auth/local_auth.dart';
